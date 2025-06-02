@@ -692,7 +692,7 @@ useEffect(() => {
                   <textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Write your birthday message here, tell me did you like this surprise? 😊"
+                    placeholder="Write your birthday message here! Did you like the surprise? 😊"
                     className="w-full h-40 p-4 bg-purple-800/60 text-amber-100 border border-amber-400/50 rounded-lg focus:outline-none focus:border-amber-400"
                     maxLength={1000}
                   />
