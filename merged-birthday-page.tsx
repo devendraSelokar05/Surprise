@@ -260,7 +260,7 @@ export default function MergedBirthdayPage() {
       setTimeout(() => {
         setShowConfetti(true)
         navigateToScreen("birthday", name)
-      }, 4000)
+      }, 0)
     }
   }
 
@@ -449,6 +449,7 @@ export default function MergedBirthdayPage() {
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }}>
                   <Button
                     type="submit"
+                  
                     className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-semibold py-3 rounded-xl text-lg shadow-lg transform transition-all duration-200 hover:scale-105"
                   >
                     Open My Surprise ✨
