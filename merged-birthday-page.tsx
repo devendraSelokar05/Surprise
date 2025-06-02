@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -131,6 +131,8 @@ export default function MergedBirthdayPage() {
   const [showMagicalEffect, setShowMagicalEffect] = useState(false)
   const [showTextarea, setShowTextarea] = useState(false)
   const [message, setMessage] = useState("")
+  const textareaRef = useRef(null)
+
 
   // Browser navigation handler
   useEffect(() => {
@@ -282,6 +284,24 @@ export default function MergedBirthdayPage() {
     
   }
 }
+
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (textareaRef.current && !textareaRef.current.contains(event.target)) {
+      setShowTextarea(false)
+    }
+  }
+
+  if (showTextarea) {
+    document.addEventListener("mousedown", handleClickOutside)
+  } else {
+    document.removeEventListener("mousedown", handleClickOutside)
+  }
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside)
+  }
+}, [showTextarea])
 
 
   return (
@@ -603,36 +623,48 @@ export default function MergedBirthdayPage() {
 
         
    
-      {currentScreen === "final" && (
+{currentScreen === "final" && (
   <div className="min-h-screen flex items-center justify-center px-4">
-    {/* {/* Final Message Section */}
-    <section className="relative z-10 w-full max-w-4xl">
+    <motion.section
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="relative z-10 w-full max-w-4xl"
+    >
       <Card className="bg-gradient-to-r from-purple-800/80 via-pink-800/80 to-orange-800/80 backdrop-blur-sm border border-amber-400/30 shadow-2xl">
         <CardContent className="p-8 md:p-12">
           <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-amber-200 mb-8">From My Heart to Yours</h2>
+            <motion.h2
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="text-3xl md:text-4xl font-bold text-amber-200 mb-8"
+            >
+              From My Heart to Yours
+            </motion.h2>
 
-            <div className="prose prose-lg max-w-none text-amber-100/90 leading-relaxed">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 1 }}
+              className="prose prose-lg max-w-none text-amber-100/90 leading-relaxed"
+            >
               <p className="text-lg md:text-xl mb-6">
                 Sometimes, the most special connections don't need labels — they just grow quietly, deeply, and
                 beautifully. Ours feels like one of those.
               </p>
-
               <p className="text-lg md:text-xl mb-6">
                 There are some things I've always felt but never found the right words or moment to share...
                 maybe someday I will. Till then, just know you mean more to me than I've ever said.
               </p>
-
               <p className="text-lg md:text-xl mb-6">
                 I don't know what the future holds, but if I ever get to choose who I'd want by my side through
                 life's ups and downs... I think you already know the answer.
               </p>
-
               <p className="text-lg md:text-xl mb-6">
                 Some relationships are written not in blood or name, but in understanding, respect, and moments
                 that feel like home. You're that for me — and always will be.
               </p>
-
               <p className="text-lg md:text-xl mb-8">
                 On this special day, I wish you all the happiness your heart can hold, all the love you so
                 freely give to others, and all the dreams you dare to dream. May this new year of your life be
@@ -650,11 +682,17 @@ export default function MergedBirthdayPage() {
               </div>
 
               {showTextarea && (
-                <div className="mt-8 bg-purple-900/80 border border-amber-400/30 rounded-lg p-4">
+                <motion.div
+                  ref={textareaRef}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                  className="mt-8 bg-purple-900/80 border border-amber-400/30 rounded-lg p-4"
+                >
                   <textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Write your birthday message here tell me did you like this surprise? 😊"
+                    placeholder="Write your birthday message here, tell me did you like this surprise? 😊"
                     className="w-full h-40 p-4 bg-purple-800/60 text-amber-100 border border-amber-400/50 rounded-lg focus:outline-none focus:border-amber-400"
                     maxLength={1000}
                   />
@@ -664,13 +702,13 @@ export default function MergedBirthdayPage() {
                       Send to WhatsApp
                     </Button>
                   </div>
-                </div>
+                </motion.div>
               )}
-            </div>
+            </motion.div>
           </div>
         </CardContent>
       </Card>
-    </section>
+    </motion.section>
   </div>
 )}
 
